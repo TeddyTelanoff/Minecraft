@@ -3,11 +3,16 @@ using UnityEngine;
 
 public class World : MonoBehaviour
 {
+	public Vector2Int[] _chunksToGenerate;
 	public GameObject _chunkPrefab;
 	public float _heightStep;
 
 	private Dictionary<Vector2Int, Chunk> _chunks = new Dictionary<Vector2Int, Chunk>();
-	private void Start() => GenerateChunk(new Vector2Int(0, 0));
+	private void Start()
+	{
+		foreach (var chunkToGenerate in _chunksToGenerate)
+			GenerateChunk(chunkToGenerate);
+	}
 
 	public void GenerateChunk(Vector2Int pos)
 	{
@@ -17,11 +22,12 @@ public class World : MonoBehaviour
 		chunk.name = $"Chunk ({pos.x}, {pos.y})";
 		Chunk chunkComponent = chunk.GetComponent<Chunk>();
 		chunkComponent._position = pos;
+		chunkComponent._world = this;
 
 		for (var x = 0; x < Chunk.ChunkSize.x; x++)
 			for (var z = 0; z < Chunk.ChunkSize.z; z++)
 			{
-				int height = Mathf.FloorToInt(Mathf.PerlinNoise((pos.x + x) * _heightStep, (pos.y + z) * _heightStep) * Chunk.ChunkSize.y);
+				int height = Mathf.FloorToInt(Mathf.PerlinNoise((pos.x * Chunk.ChunkSize.x + x) * _heightStep, (pos.y * Chunk.ChunkSize.z + z) * _heightStep) * Chunk.ChunkSize.y);
 				for (var y = 0; y < height; y++)
 					chunkComponent._blocks[x, y, z].BlockType = BlockType.Grass;
 				//for (var y = 0; y < Chunk.ChunkSize.y; y++)
@@ -30,4 +36,9 @@ public class World : MonoBehaviour
 
 		chunkComponent.GenerateMesh();
 	}
+
+	public bool IsTransparent(Vector3Int pos)
+    {
+		return false;
+    }
 }

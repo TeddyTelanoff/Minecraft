@@ -435,9 +435,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 121295fcc0564104491d96ab84fcc655, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _chunksToGenerate:
+  - {x: 0, y: 0}
+  - {x: 1, y: 0}
+  - {x: 0, y: 1}
+  - {x: 1, y: 1}
+  - {x: -1, y: 0}
+  - {x: 0, y: -1}
+  - {x: -1, y: -1}
+  - {x: 1, y: -1}
+  - {x: -1, y: 1}
   _chunkPrefab: {fileID: 6536231836413247501, guid: 8a9b1114220a6f040826e6343ea5d045,
     type: 3}
-  _heightStep: 0.1
+  _heightStep: 0.025
 --- !u!4 &1113382762
 Transform:
   m_ObjectHideFlags: 0
