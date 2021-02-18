@@ -1,5 +1,5 @@
 ﻿//#define DRAW_CHUNK_EDGES
-#define DONT_DRAW_CHUNK_EDGES
+//#define DONT_DRAW_CHUNK_EDGES
 
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,6 +31,8 @@ public class Chunk : MonoBehaviour
 					if (z <= 0 || _blocks[x, y, z - 1].BlockType == BlockType.Air)
 #elif DONT_DRAW_CHUNK_EDGES
 					if (z > 0 && _blocks[x, y, z - 1].BlockType == BlockType.Air)
+#else
+					if (IsTransparent(x, y, z - 1))
 #endif
 						BuildMesh(ref vertices, ref triangles, ref uvs, new Vector3(x + 0, y + 0, z + 0), Vector3.up, Vector3.right, false);
 					// Back
@@ -38,6 +40,8 @@ public class Chunk : MonoBehaviour
 					if (z >= ChunkSize.z - 1 || _blocks[x, y, z + 1].BlockType == BlockType.Air)
 #elif DONT_DRAW_CHUNK_EDGES
 					if (z < ChunkSize.z - 1 && _blocks[x, y, z + 1].BlockType == BlockType.Air)
+#else
+					if (IsTransparent(x, y, z + 1))
 #endif
 						BuildMesh(ref vertices, ref triangles, ref uvs, new Vector3(x + 0, y + 0, z + 1), Vector3.up, Vector3.right, true);
 
@@ -46,6 +50,8 @@ public class Chunk : MonoBehaviour
 					if (x <= 0 || _blocks[x - 1, y, z].BlockType == BlockType.Air)
 #elif DONT_DRAW_CHUNK_EDGES
 					if (x > 0 && _blocks[x - 1, y, z].BlockType == BlockType.Air)
+#else
+					if (IsTransparent(x - 1, y, z))
 #endif
 						BuildMesh(ref vertices, ref triangles, ref uvs, new Vector3(x + 0, y + 0, z + 0), Vector3.up, Vector3.forward, true);
 					// Left
@@ -53,6 +59,8 @@ public class Chunk : MonoBehaviour
 					if (x >= ChunkSize.x - 1 || _blocks[x + 1, y, z].BlockType == BlockType.Air)
 #elif DONT_DRAW_CHUNK_EDGES
 					if (x < ChunkSize.x - 1 && _blocks[x + 1, y, z].BlockType == BlockType.Air)
+#else
+					if (IsTransparent(x + 1, y, z))
 #endif
 						BuildMesh(ref vertices, ref triangles, ref uvs, new Vector3(x + 1, y + 0, z + 0), Vector3.up, Vector3.forward, false);
 
@@ -61,6 +69,8 @@ public class Chunk : MonoBehaviour
 					if (y <= 0 || _blocks[x, y - 1, z].BlockType == BlockType.Air)
 #elif DONT_DRAW_CHUNK_EDGES
 					if (y > 0 && _blocks[x, y - 1, z].BlockType == BlockType.Air)
+#else
+					if (IsTransparent(x, y - 1, z))
 #endif
 						BuildMesh(ref vertices, ref triangles, ref uvs, new Vector3(x + 0, y + 0, z + 0), Vector3.forward, Vector3.right, true);
 					// Bottom
@@ -68,6 +78,8 @@ public class Chunk : MonoBehaviour
 					if (y >= ChunkSize.y - 1 || _blocks[x, y + 1, z].BlockType == BlockType.Air)
 #elif DONT_DRAW_CHUNK_EDGES
 					if (y < ChunkSize.y - 1 && _blocks[x, y + 1, z].BlockType == BlockType.Air)
+#else
+					if (IsTransparent(x, y + 1, z))
 #endif
 						BuildMesh(ref vertices, ref triangles, ref uvs, new Vector3(x + 0, y + 1, z + 0), Vector3.forward, Vector3.right, false);
 				}
@@ -104,5 +116,34 @@ public class Chunk : MonoBehaviour
 		triangles.Add(firstVert + 0);
 		triangles.Add(firstVert + 2 + irev);
 		triangles.Add(firstVert + 3 - irev);
+	}
+
+	private bool IsTransparent(int relX, int relY, int relZ)
+    {
+		Vector2Int chunkPos = _position;
+
+		if (relX < 0)
+		{
+			chunkPos.x--;
+			relX = ChunkSize.x - 1;
+		}
+		if (relZ < 0)
+		{
+			chunkPos.y--;
+			relZ = ChunkSize.x - 1;
+		}
+
+		if (relX >= ChunkSize.x)
+		{
+			chunkPos.x++;
+			relX = 0;
+		}
+		if (relZ >= ChunkSize.z)
+		{
+			chunkPos.y++;
+			relZ = 0;
+		}
+
+		return _world.IsTransparent(chunkPos, new Vector3Int(relX, relY, relZ));
 	}
 }

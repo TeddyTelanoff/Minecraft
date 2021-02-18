@@ -37,8 +37,17 @@ public class World : MonoBehaviour
 		chunkComponent.GenerateMesh();
 	}
 
-	public bool IsTransparent(Vector3Int pos)
+	public bool IsTransparent(Vector2Int chunkPos, Vector3Int blockPos)
     {
-		return false;
+		if (_chunks.TryGetValue(chunkPos, out Chunk chunk))
+		{
+			Debug.Log($"Chunk ({chunkPos.x}, {chunkPos.y}) Exists");
+			return chunk._blocks[blockPos.x, blockPos.y, blockPos.z].BlockType == BlockType.Air;
+		}
+		else
+		{
+			Debug.Log($"Chunk ({chunkPos.x}, {chunkPos.y}) Does Not Exists");
+			return false;
+		}
     }
 }
