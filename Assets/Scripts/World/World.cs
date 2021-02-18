@@ -7,14 +7,14 @@ public class World : MonoBehaviour
 	public GameObject _chunkPrefab;
 	public float _heightStep;
 
-	private Dictionary<Vector2Int, Chunk> _chunks = new Dictionary<Vector2Int, Chunk>();
+	private Dictionary<ChunkPos, Chunk> _chunks = new Dictionary<ChunkPos, Chunk>();
 	private void Start()
 	{
 		foreach (var chunkToGenerate in _chunksToGenerate)
-			GenerateChunk(chunkToGenerate);
+			GenerateChunk(new ChunkPos(chunkToGenerate));
 	}
 
-	public void GenerateChunk(Vector2Int pos)
+	public void GenerateChunk(ChunkPos pos)
 	{
 		Debug.Assert(!_chunks.ContainsKey(pos), $"Chunk Already Generated at [{pos.x}, {pos.y}]");
 
@@ -37,7 +37,7 @@ public class World : MonoBehaviour
 		chunkComponent.GenerateMesh();
 	}
 
-	public bool IsTransparent(Vector2Int chunkPos, Vector3Int blockPos)
+	public bool IsTransparent(ChunkPos chunkPos, Vector3Int blockPos)
     {
 		if (_chunks.TryGetValue(chunkPos, out Chunk chunk))
 		{
