@@ -313,7 +313,7 @@ MonoBehaviour:
   _rotation: {x: 0, y: 0}
   _rotateSpeed: 625
   _rotateSlerp: 0.99
---- !u!1 &1014795316
+--- !u!1 &1064634285
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -321,10 +321,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1014795320}
-  - component: {fileID: 1014795319}
-  - component: {fileID: 1014795318}
-  - component: {fileID: 1014795317}
+  - component: {fileID: 1064634289}
+  - component: {fileID: 1064634288}
+  - component: {fileID: 1064634287}
+  - component: {fileID: 1064634286}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -332,26 +332,26 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &1014795317
+--- !u!65 &1064634286
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1014795316}
+  m_GameObject: {fileID: 1064634285}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &1014795318
+--- !u!23 &1064634287
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1014795316}
+  m_GameObject: {fileID: 1064634285}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -384,27 +384,27 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &1014795319
+--- !u!33 &1064634288
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1014795316}
+  m_GameObject: {fileID: 1064634285}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &1014795320
+--- !u!4 &1064634289
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1014795316}
+  m_GameObject: {fileID: 1064634285}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1113382760
 GameObject:
@@ -435,6 +435,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 121295fcc0564104491d96ab84fcc655, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _chunkPrefab: {fileID: 6536231836413247501, guid: 8a9b1114220a6f040826e6343ea5d045,
+    type: 3}
+  _heightStep: 0.1
 --- !u!4 &1113382762
 Transform:
   m_ObjectHideFlags: 0
@@ -447,5 +450,5 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
