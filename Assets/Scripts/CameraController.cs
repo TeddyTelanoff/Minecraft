@@ -32,8 +32,8 @@ public class CameraController : MonoBehaviour
 			transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(_rotation), _rotateSlerp);
 		}
 
-		Vector3 movmentForward = Input.GetAxis("Horizontal") * Time.deltaTime * transform.right;
-		Vector3 movmentRight   = Input.GetAxis("Vertical") * Time.deltaTime * transform.forward;
+		var movmentForward = Input.GetAxisRaw("Horizontal") * Time.deltaTime * transform.right;
+		var movmentRight   = Input.GetAxisRaw("Vertical") * Time.deltaTime * transform.forward;
 		float movmentUp = 0;
 		if (Input.GetKey(KeyCode.Space))
 			movmentUp++;
