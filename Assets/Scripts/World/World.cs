@@ -30,10 +30,8 @@ public class World : MonoBehaviour
 			for (var z = 0; z < Chunk.ChunkSize.z; z++)
 			{
 				int height = Mathf.FloorToInt(Mathf.PerlinNoise((pos.x * Chunk.ChunkSize.x + x) * _heightStep, (pos.y * Chunk.ChunkSize.z + z) * _heightStep) * Chunk.ChunkSize.y);
-				for (var y = 0; y < height; y++)
-					chunkComponent._blocks[x, y, z].BlockType = BlockType.Grass;
-				//for (var y = 0; y < Chunk.ChunkSize.y; y++)
-				//	chunkComponent._blocks[x, y, z].BlockType = Random.value > 0.5 ? BlockType.Air : BlockType.Grass;
+				for (var y = 0; y < Chunk.ChunkSize.y; y++)
+					chunkComponent._blocks[x, y, z] = new Block { BlockType = y < height ? BlockType.Grass : BlockType.Air };
 			}
 
 		_chunks.Add(pos, chunkComponent);

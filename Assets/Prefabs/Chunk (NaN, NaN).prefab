@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6536231836413247505}
   - component: {fileID: 6536231836413247504}
   - component: {fileID: 6536231836413247503}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Chunk (NaN, NaN)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,3 +108,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _position: {x: 0, y: 0}
+  _world: {fileID: 0}

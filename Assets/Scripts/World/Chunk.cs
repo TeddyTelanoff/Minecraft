@@ -12,7 +12,17 @@ public class Chunk : MonoBehaviour
 
 	public Block[,,] _blocks = new Block[ChunkSize.x, ChunkSize.y, ChunkSize.z];
 
-	public void ReGenerateMesh() => GenerateMesh();
+	private Mesh _mesh;
+
+    private void Awake()
+    {
+		_mesh = new Mesh();
+		GetComponent<MeshFilter>().sharedMesh = _mesh;
+		GetComponent<MeshCollider>().sharedMesh = _mesh;
+	}
+
+    public void ReGenerateMesh() => GenerateMesh();
+
 	public void GenerateMesh()
 	{
 		var vertices = new List<Vector3>();
@@ -84,18 +94,18 @@ public class Chunk : MonoBehaviour
 						BuildMesh(ref vertices, ref triangles, ref uvs, new Vector3(x + 0, y + 1, z + 0), Vector3.forward, Vector3.right, false);
 				}
 
-		var mesh = new Mesh();
-		mesh.vertices = vertices.ToArray();
-		mesh.triangles = triangles.ToArray();
-		mesh.uv = uvs.ToArray();
-		mesh.RecalculateBounds();
-		mesh.RecalculateNormals();
-		mesh.RecalculateTangents();
+		_mesh.Clear();
+		_mesh.vertices = vertices.ToArray();
+		_mesh.triangles = triangles.ToArray();
+		_mesh.uv = uvs.ToArray();
+		_mesh.RecalculateBounds();
+		_mesh.RecalculateNormals();
+		_mesh.RecalculateTangents();
 
 		// Debug.Log($"Triangles[{triangles.Count}], Mesh Triangles[{mesh.triangles.Length}]");
 
-		GetComponent<MeshFilter>().sharedMesh = mesh;
-		GetComponent<MeshCollider>().sharedMesh = mesh;
+		GetComponent<MeshFilter>().sharedMesh = _mesh;
+		GetComponent<MeshCollider>().sharedMesh = _mesh;
 	}
 
 	private void BuildMesh(ref List<Vector3> vertices, ref List<int> triangles, ref List<Vector2> uvs, Vector3 pos, Vector3 up, Vector3 right, bool reverse)
@@ -119,7 +129,7 @@ public class Chunk : MonoBehaviour
 	}
 
 	private bool IsTransparent(int relX, int relY, int relZ)
-    {
+	{
 		Vector2Int chunkPos = _position;
 
 		if (relX < 0)

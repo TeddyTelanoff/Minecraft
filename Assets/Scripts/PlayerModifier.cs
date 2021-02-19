@@ -1,13 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerModifier : MonoBehaviour
 {
-	public World _world;
     public float _reach;
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, _reach))
             {

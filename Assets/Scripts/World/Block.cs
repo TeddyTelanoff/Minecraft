@@ -1,4 +1,4 @@
-﻿public struct Block
+﻿public class Block
 {
     public BlockType BlockType { get; set; }
 }
