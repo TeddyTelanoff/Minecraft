@@ -4,14 +4,21 @@ public class CameraController : MonoBehaviour
 {
 	public float _speed;
 
+	public Transform _cameraTransform;
 	public Vector2 _rotation;
 	public float _rotateSpeed;
 	[Range(0, 1)]
 	public float _rotateSlerp;
 
+	private Rigidbody _rigidbody;
 	private bool _lockCursor;
+	private int _groundsTouching;
+	private bool _onGround { get => _groundsTouching > 0; }
 
-	private void Update()
+    private void Start() =>
+		_rigidbody = GetComponent<Rigidbody>();
+
+    private void Update()
 	{
 		if (Input.GetMouseButtonDown(1))
 		{
@@ -29,7 +36,8 @@ public class CameraController : MonoBehaviour
 
 			_rotation.x = Mathf.Clamp(_rotation.x, -90, 90);
 
-			transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(_rotation), _rotateSlerp);
+			transform.localRotation = Quaternion.Slerp(transform.localRotation, Quaternion.Euler(new Vector3 { y = _rotation.y }), _rotateSlerp);
+			_cameraTransform.localRotation = Quaternion.Slerp(_cameraTransform.localRotation, Quaternion.Euler(new Vector3 { x = _rotation.x }), _rotateSlerp);
 		}
 
 		var movmentForward = Input.GetAxisRaw("Horizontal") * Time.deltaTime * transform.right;
@@ -49,6 +57,13 @@ public class CameraController : MonoBehaviour
 		movmentRight *= _speed;
 		movmentUp *= _speed;
 
-		transform.localPosition += movmentForward + movmentRight + new Vector3 { y = movmentUp };
+		if (!_onGround)
+			movmentUp = 0;
+
+		_rigidbody.AddForce(movmentForward + movmentRight + new Vector3 { y = movmentUp });
 	}
+
+	private void OnTriggerEnter(Collider other) => _groundsTouching++;
+
+	private void OnTriggerExit(Collider other) => _groundsTouching--;
 }
