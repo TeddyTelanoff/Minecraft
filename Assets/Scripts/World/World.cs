@@ -7,14 +7,14 @@ public class World : MonoBehaviour
 	public GameObject _chunkPrefab;
 	public float _heightStep;
 
-	private Dictionary<ChunkPos, Chunk> _chunks = new Dictionary<ChunkPos, Chunk>();
+	private Dictionary<Vector2Int, Chunk> _chunks = new Dictionary<Vector2Int, Chunk>();
 	private void Start()
 	{
 		foreach (var chunkToGenerate in _chunksToGenerate)
-			GenerateChunk(new ChunkPos(chunkToGenerate));
+			GenerateChunk(chunkToGenerate);
 	}
 
-	public void GenerateChunk(ChunkPos pos)
+	public void GenerateChunk(Vector2Int pos)
 	{
 		Debug.Assert(!_chunks.ContainsKey(pos), $"Chunk Already Generated at [{pos.x}, {pos.y}]");
 
@@ -37,16 +37,25 @@ public class World : MonoBehaviour
 		chunkComponent.GenerateMesh();
 	}
 
-	public bool IsTransparent(ChunkPos chunkPos, Vector3Int blockPos)
+	public bool IsTransparent(Vector2Int chunkPos, Vector3Int blockPos)
     {
-		if (_chunks.TryGetValue(chunkPos, out Chunk chunk))
+		foreach (var entry in _chunks)
+        {
+			if (entry.Key == chunkPos)
+            {
+				Debug.Log($"Chunk ({chunkPos.x}, {chunkPos.y}) Exists");
+				return entry.Value._blocks[blockPos.x, blockPos.y, blockPos.z].BlockType == BlockType.Air;
+			}
+        }
+
+		if (_chunks.TryFindInDictionary(chunkPos, out Chunk chunk))
 		{
 			Debug.Log($"Chunk ({chunkPos.x}, {chunkPos.y}) Exists");
 			return chunk._blocks[blockPos.x, blockPos.y, blockPos.z].BlockType == BlockType.Air;
 		}
 		else
 		{
-			Debug.Log($"Chunk ({chunkPos.x}, {chunkPos.y}) Does Not Exists");
+			//Debug.Log($"Chunk ({chunkPos.x}, {chunkPos.y}) Does Not Exists");
 			return false;
 		}
     }

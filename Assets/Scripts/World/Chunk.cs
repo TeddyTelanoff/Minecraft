@@ -7,7 +7,7 @@ using UnityEngine;
 public class Chunk : MonoBehaviour
 {
 	public static Vector3Int ChunkSize { get => new Vector3Int(16, 16, 16); }
-	public ChunkPos _position;
+	public Vector2Int _position;
 	public World _world;
 
 	public Block[,,] _blocks = new Block[ChunkSize.x, ChunkSize.y, ChunkSize.z];
@@ -120,7 +120,7 @@ public class Chunk : MonoBehaviour
 
 	private bool IsTransparent(int relX, int relY, int relZ)
     {
-		ChunkPos chunkPos = _position;
+		Vector2Int chunkPos = _position;
 
 		if (relX < 0)
 		{
@@ -145,22 +145,5 @@ public class Chunk : MonoBehaviour
 		}
 
 		return _world.IsTransparent(chunkPos, new Vector3Int(relX, relY, relZ));
-	}
-}
-
-public struct ChunkPos
-{
-	public int x, y;
-
-	public ChunkPos(Vector2Int vec)
-    {
-		x = vec.x;
-		y = vec.y;
-	}
-
-	public ChunkPos(int x, int y)
-	{
-		this.x = x;
-		this.y = y;
 	}
 }
