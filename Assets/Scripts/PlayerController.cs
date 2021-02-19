@@ -3,6 +3,7 @@
 public class PlayerController : MonoBehaviour
 {
 	public float _jumpForce;
+	public float _airTimeBoost;
 	public float _airBoost;
 	public float _speed;
 
@@ -13,6 +14,7 @@ public class PlayerController : MonoBehaviour
 	public float _rotateSlerp;
 
 	private Rigidbody _rigidbody;
+	private float _airTime;
 	private bool _lockCursor;
 	private int _groundsTouching;
 	private bool _onGround { get => _groundsTouching > 0; }
@@ -61,9 +63,11 @@ public class PlayerController : MonoBehaviour
 
 		if (!_onGround)
         {
-			movmentForward *= _airBoost;
-			movmentRight *= _airBoost;
-			movmentUp = 0;
+			movmentForward *= _airBoost + _airTime * _airTimeBoost;
+			movmentRight *= _airBoost + _airTime * _airTimeBoost;
+            movmentUp = 0;
+
+			_airTime += Time.deltaTime;
 		}
 
 		_rigidbody.AddForce(movmentForward + movmentRight + new Vector3 { y = movmentUp });

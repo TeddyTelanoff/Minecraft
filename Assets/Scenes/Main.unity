@@ -480,6 +480,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _jumpForce: 500
+  _airTimeBoost: 0.01
   _airBoost: 1.25
   _speed: 50
   _cameraTransform: {fileID: 963194228}
