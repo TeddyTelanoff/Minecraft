@@ -130,7 +130,7 @@ public class Chunk : MonoBehaviour
 		if (relZ < 0)
 		{
 			chunkPos.y--;
-			relZ = ChunkSize.x - 1;
+			relZ = ChunkSize.z - 1;
 		}
 
 		if (relX >= ChunkSize.x)

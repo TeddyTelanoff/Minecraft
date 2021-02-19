@@ -12,6 +12,8 @@ public class World : MonoBehaviour
 	{
 		foreach (var chunkToGenerate in _chunksToGenerate)
 			GenerateChunk(chunkToGenerate);
+		foreach (var chunk in _chunks.Values)
+			chunk.ReGenerateMesh();
 	}
 
 	public void GenerateChunk(Vector2Int pos)
@@ -34,29 +36,23 @@ public class World : MonoBehaviour
 				//	chunkComponent._blocks[x, y, z].BlockType = Random.value > 0.5 ? BlockType.Air : BlockType.Grass;
 			}
 
-		chunkComponent.GenerateMesh();
+		_chunks.Add(pos, chunkComponent);
+		//chunkComponent.GenerateMesh();
 	}
 
 	public bool IsTransparent(Vector2Int chunkPos, Vector3Int blockPos)
     {
-		foreach (var entry in _chunks)
-        {
-			if (entry.Key == chunkPos)
-            {
-				Debug.Log($"Chunk ({chunkPos.x}, {chunkPos.y}) Exists");
-				return entry.Value._blocks[blockPos.x, blockPos.y, blockPos.z].BlockType == BlockType.Air;
-			}
-        }
-
-		if (_chunks.TryFindInDictionary(chunkPos, out Chunk chunk))
+		if (blockPos.y < 0 || blockPos.y >= Chunk.ChunkSize.y)
+			return true;
+		else if (_chunks.TryGetValue(chunkPos, out Chunk chunk))
 		{
-			Debug.Log($"Chunk ({chunkPos.x}, {chunkPos.y}) Exists");
+			//Debug.Log($"Chunk ({chunkPos.x}, {chunkPos.y}) Exists");
 			return chunk._blocks[blockPos.x, blockPos.y, blockPos.z].BlockType == BlockType.Air;
 		}
 		else
 		{
 			//Debug.Log($"Chunk ({chunkPos.x}, {chunkPos.y}) Does Not Exists");
-			return false;
+			return true;
 		}
     }
 }
