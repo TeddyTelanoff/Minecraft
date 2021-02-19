@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
+	public float _jumpForce;
+	public float _airBoost;
 	public float _speed;
 
 	public Transform _cameraTransform;
@@ -55,10 +57,14 @@ public class CameraController : MonoBehaviour
 
 		movmentForward *= _speed;
 		movmentRight *= _speed;
-		movmentUp *= _speed;
+		movmentUp *= _jumpForce;
 
 		if (!_onGround)
+        {
+			movmentForward *= _airBoost;
+			movmentRight *= _airBoost;
 			movmentUp = 0;
+		}
 
 		_rigidbody.AddForce(movmentForward + movmentRight + new Vector3 { y = movmentUp });
 	}

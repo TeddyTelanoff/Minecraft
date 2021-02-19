@@ -364,9 +364,9 @@ GameObject:
   - component: {fileID: 1209625692}
   - component: {fileID: 1209625691}
   - component: {fileID: 1209625690}
+  - component: {fileID: 1209625696}
   - component: {fileID: 1209625694}
   - component: {fileID: 1209625695}
-  - component: {fileID: 1209625696}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -478,6 +478,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 819fccdc950656d45b95a3eba9329f7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _jumpForce: 500
+  _airBoost: 1.25
   _speed: 50
   _cameraTransform: {fileID: 963194228}
   _rotation: {x: 0, y: 0}
