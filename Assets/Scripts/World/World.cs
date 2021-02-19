@@ -7,7 +7,7 @@ public class World : MonoBehaviour
 	public GameObject _chunkPrefab;
 	public float _heightStep;
 
-	private Dictionary<Vector2Int, Chunk> _chunks = new Dictionary<Vector2Int, Chunk>();
+	public Dictionary<Vector2Int, Chunk> _chunks = new Dictionary<Vector2Int, Chunk>();
 	private void Start()
 	{
 		foreach (var chunkToGenerate in _chunksToGenerate)
