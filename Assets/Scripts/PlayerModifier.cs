@@ -25,7 +25,7 @@ public class PlayerModifier : MonoBehaviour
 
                 Debug.Log($"Modifying Block ({blockX}, {blockY}, {blockZ}) From Point: {point}");
 
-                chunk._blocks[blockX, blockY, blockZ].BlockType = BlockType.Air;
+                chunk.DestroyBlock(blockX, blockY, blockZ);
                 chunk.ReGenerateMesh();
             }
         }

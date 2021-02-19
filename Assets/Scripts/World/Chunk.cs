@@ -108,6 +108,9 @@ public class Chunk : MonoBehaviour
 		GetComponent<MeshCollider>().sharedMesh = _mesh;
 	}
 
+	public void DestroyBlock(int x, int y, int z) =>
+		_blocks[x, y, z].BlockType = BlockType.Air;
+
 	private void BuildMesh(ref List<Vector3> vertices, ref List<int> triangles, ref List<Vector2> uvs, Vector3 pos, Vector3 up, Vector3 right, bool reverse)
 	{
 		Vector3 half = Vector3.one / 2;
