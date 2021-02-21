@@ -109,7 +109,7 @@ public class Chunk : MonoBehaviour
 	}
 
 	public void DestroyBlock(int x, int y, int z) =>
-		_blocks[x, y, z].BlockType = BlockType.Air;
+		_blocks[x, y, z] = new Block { BlockType = BlockType.Air };
 
 	private void BuildMesh(ref List<Vector3> vertices, ref List<int> triangles, ref List<Vector2> uvs, Vector3 pos, Vector3 up, Vector3 right, bool reverse)
 	{
